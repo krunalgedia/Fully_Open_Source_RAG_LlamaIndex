@@ -1,4 +1,4 @@
-# Fully_Open_Source_RAG_LlamaIndex
+# Open Source RAG using LlamaIndex & Huggingface
 
 Business Problem:
 
