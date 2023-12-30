@@ -77,7 +77,7 @@ We use
 
 ## Results
 
-The question tested by Open AI (What did the author do growing up?) is tested by our solution as well.
+The question tested by Open AI (```What did the author do growing up?```) is tested by our solution as well.
 
 Following are the first two nodes retrieved by the query:
 
