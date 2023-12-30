@@ -10,46 +10,42 @@ The primary objective of this open-source project is to develop a Privacy-Focuse
 ## Table of Contents
 
 - [Project Overview](#project-overview)
-- [Installation](#installation)
-- [Usage](#usage)
+- [Files](#files)
 - [Data](#data)
 - [Workflow](#workflow)
 - [Results](#results)
 - [More ideas](#More-ideas)
 - [Dependencies](#dependencies)
-- [License](#license)
 - [Contact](#contact)
 - [References](#references)
 
 ## Project Overview
 
-The goal of this project is to develop a complete open source Retrieval Augmentated Generation customizable solution. Finally we even compare the RAG with the current Open AI's ChatGPT RAG solution as well.
+The goal of this project is to develop a complete open source Retrieval Augmentated Generation customizable solution. Finally, we even compare the RAG with the current Open AI's ChatGPT RAG solution as well.
 
 Key Features
 * Open Source Embeddings
 * Open Source LLM
 * Custom Document Object ->Node Object splitting  
 
-## Installation
+## Files
 
 ```bash
-# Example installation command
-pip install -r requirements.txt
-
-# Run Web Application
-streamlit run app.py
+Fully_Open_Source_RAG_LlamaIndex.ipynb contains the end-to-end code for RAG with LlamaIndex and Huggingface
 ```
+
+Check Dependencies for further details.
 
 ## Data
 
-Since we wanted to compare with the OpenAI's RAG built using Chat GPT, we use the Paul Graham Essay text [1] which is used even in the OpenAI cookbook for RAG solution [2].  
+Since we wanted to compare with the OpenAI's RAG built using Chat GPT, we used the Paul Graham Essay text [1] which is used even in the OpenAI cookbook for RAG solution [2].  
 
 ## Workflow
 
 
 **1st Part: Make NodeObejcts or NodeIndex as called in LlamaIndex.**
 
-1. Parse the source docuemnts using various data loaders into LlamaIndex's Docuement objects. By default, for each page in the document, you get one Docuemnt object. In our case, since we parse form one webpage, we get just one Docuemnt object.
+1. Parse the source documents using various data loaders into LlamaIndex's Document objects. By default, for each page in the document, you get one Document object. In our case, since we parse from one webpage, we get just one Docuemnt object.
 2. Now, you can either: 
   * Submitting the complete Document object to the index is a fitting method for treating the entire document as a cohesive entity. This proves advantageous when dealing with relatively brief documents or when preserving the context     
     between different segments of the document is crucial.
@@ -76,47 +72,67 @@ We use
 * Small BAAI general embedding [3]
 * LLM MistralAI [4]
 
-* .ipynb contains the end-to-end code for RAG with LlamaIndex and Huggingface
-
 ## Results
 
+The question tested by Open AI (What did the author do growing up?) is tested by our solution as well.
 
+Following are the first two nodes retrieved by the query:
 
-We fine-tuned using Facebook/Meta's LayoutLM (which utilizes BERT as the backbone and adds two new input embeddings: 2-D position embedding and image embedding) [3]. The model was imported from the Hugging Face library [4] with end-to-end code implemented in PyTorch. We leveraged the tokenizer provided by the library itself. For the test case, we perform the OCR using Pytesseract.
-
-With just 4 SBB train tickets we can achieve an average F1 score of 0.81.   
-
-| Epoch | Average Precision | Average Recall | Average F1 | Average Accuracy |
-|--------:|------------:|---------:|-----:|-----------:|
-|     145 |        0.89 |     0.77 | 0.82 |       0.9  |
-|     146 |        0.9  |     0.79 | 0.84 |       0.9  |
-|     147 |        0.86 |     0.77 | 0.81 |       0.89 |
-|     148 |        0.87 |     0.78 | 0.82 |       0.9  |
-|     149 |        0.86 |     0.77 | 0.81 |       0.89 |
-
-The web application serves demo:
-![Image 1]() | ![Image 2](https://github.com/krunalgedia/SBB_TrainTicketParser/blob/main/images_app/test1.gif)
+![Image 1](https://github.com/krunalgedia/Fully_Open_Source_RAG_LlamaIndex/blob/main/images_readme/samplequesmine.png) | ![Image 2](https://github.com/krunalgedia/Fully_Open_Source_RAG_LlamaIndex/blob/main/images_readme/samplequesopenai.png)
 --- | --- 
-Opening page | Testing ... 
+First two nodes retrieved by our RAG | First two nodes retrieved by OpenAI GPT4
 
-Once the user uploads the image, the document gets parsed and the information from the document gets updated in the relational database which can be used to verify the traveler's info and also to automate the travel cost-processing task.
+As seen, the first node has the same content in both.
+The final answer given by Open AI and our solution is:
+
+![Image 1](https://github.com/krunalgedia/Fully_Open_Source_RAG_LlamaIndex/blob/main/images_readme/ansminee.png) | ![Image 2](https://github.com/krunalgedia/Fully_Open_Source_RAG_LlamaIndex/blob/main/images_readme/ansopenai.png)
+--- | --- 
+Answer by our RAG | Answer by OpenAI GPT4
+
+Further Response Evaluation (as given and used by Open AI):
+
+* FaithfulnessEvaluator: Measures if the response from a query engine matches any source nodes which is useful for measuring if the response is hallucinated.
+
+* Relevancy Evaluator: Measures if the response + source nodes match the query.
+
+We get a Faithfulness score of 0.4 and a Relevancy score of 0.9. Open AI gets both as 1.0. However, it is important to note that we generated 466/*2 questions while OpenAI 28/*2. This is because we worked on a GPU with 16 GB RAM and thus had to keep the Node size small while OpenAI had a much larger node size, thus reducing the probability of nodes not containing the answer easily.
+
+
+* Hit Rate:
+
+Hit rate calculates the fraction of queries where the correct answer is found within the top-k retrieved documents. In simpler terms, it’s about how often our system gets it right within the top few guesses.
+
+* Mean Reciprocal Rank (MRR):
+
+For each query, MRR evaluates the system’s accuracy by looking at the rank of the highest-placed relevant document. Specifically, it’s the average of the reciprocals of these ranks across all the queries. So, if the first relevant document is the top result, the reciprocal rank is 1; if it’s second, the reciprocal rank is 1/2, and so on.
+
+They get both 1.0. We get
+
+|    | Retriever Name                    |   Hit Rate |      MRR |
+|---:|:----------------------------------|-----------:|---------:|
+|  0 | Custom OneDOC Embedding Retriever |   0.253912 | 0.226885 |
+
+Again, this can't be apple to apple comparison given it was tested only on 28/*2 questions by Open AI, thus they had way larger chunks compared to ours 466/*2 questions on every small chunk.
 
 
 ## More ideas
 
-Instead of using OCR from the UBIAI tool, it best is to use pyteserract or same OCR tool for train and test set. Further, with Document AI being developed at a rapid pace, it would be worthwhile to test newer multimodal models which hopefully either provide a new solution for not using OCR or inbuilt OCR since it is important to be consistent in preprocessing train and test set for best results.
-
-Also, train on at least >50 tickets, since this was just a small test case to see how well the model can work.
+With LLM and embeddings becoming more powerful and lightweight, it shows great promise for future RAGs given open source solutions and can be cost-effective and also avoid privacy concerns and data leaks.
 
 ## Dependencies
 
 This project uses the following dependencies:
 
-- **Python:** 3.10.12/3.9.18 
-- **PyTorch:** 2.1.0+cu121/2.1.1+cpu
-- **Streamlit:** 1.28.2 
+- transformers: 4.35.0
+- openai: 1.6.1
+- llama_index: 0.9.22
+- pypdf: 3.17.4
+- accelerate: 0.25.0
+- sentence_transformers: 2.2.2
+- pydantic: 1.10.13
+- accelerate: 0.25.0
 
-- [SBB ticket parser model on Hugging Face](https://huggingface.co/KgModel/sbb_ticket_parser_LayoutLM)
+Given the pace of LLM development, it is likely other versions may encounter issues.
   
 ## Contact
 
