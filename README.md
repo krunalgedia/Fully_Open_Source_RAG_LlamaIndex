@@ -62,15 +62,19 @@ Since we could encounter longer docuemnts, we decide to split the Document Objec
 An IndexNode, derived from a TextNode, primarily encapsulates textual content. Its distinctive attribute, the index_id, serves as a unique identifier or reference, establishing links to other entities in the system. This referencing capability enhances connectivity and relational information, extending beyond textual content. In scenarios involving recursive retrieval and node references, smaller chunks (embodied as IndexNode objects) can point to larger parent chunks. While smaller chunks are retrieved during query time, references to more substantial chunks are pursued, providing richer context for synthesis.
 
 Below is the Diagram of all the above steps:
-![Image 1](https://github.com/krunalgedia/SBB_TrainTicketParser/blob/main/images_app/sample.gif)
+
+![Image 1](https://github.com/krunalgedia/Fully_Open_Source_RAG_LlamaIndex/blob/main/images_readme/ip.png)
+
+**2nd Part: Embedding, Recursive Retrieval, and LLM Generative AI answer.**
+
+We use 
+* Small BAAI general embedding [3]
+* LLM MistralAI [4]
 
 5. We then store all the indexes using VectorStoreIndex. A VectorStoreIndex in LlamaIndex is a type of index that uses vector representations of text for efficient retrieval of relevant context.It is built on top of a VectorStore, which is a data structure that stores vectors and allows for quick nearest neighbor search. The VectorStoreIndex takes in IndexNode objects, which represent chunks of the original documents.
 
 6. We then use the RecursiveRetriever to fetch relevant nodes. It recursively explore links from nodes to other retrievers or query engines. Thus, if any of those nodes point to another retriever or query engine, the RecursiveRetriever will follow that link and query the linked retriever or engine as well.
        
-We use 
-* Small BAAI general embedding [3]
-* LLM MistralAI [4]
 
 ## Results
 
@@ -85,7 +89,7 @@ First two nodes retrieved by our RAG | First two nodes retrieved by OpenAI GPT4
 As seen, the first node has the same content in both.
 The final answer given by Open AI and our solution is:
 
-![Image 1](https://github.com/krunalgedia/Fully_Open_Source_RAG_LlamaIndex/blob/main/images_readme/ansminee.png) | ![Image 2](https://github.com/krunalgedia/Fully_Open_Source_RAG_LlamaIndex/blob/main/images_readme/ansopenai.png)
+![Image 1](https://github.com/krunalgedia/Fully_Open_Source_RAG_LlamaIndex/blob/main/images_readme/ansmine.png) | ![Image 2](https://github.com/krunalgedia/Fully_Open_Source_RAG_LlamaIndex/blob/main/images_readme/ansopenai.png)
 --- | --- 
 Answer by our RAG | Answer by OpenAI GPT4
 
@@ -110,7 +114,7 @@ They get both 1.0. We get
 
 |    | Retriever Name                    |   Hit Rate |      MRR |
 |---:|:----------------------------------|-----------:|---------:|
-|  0 | Custom OneDOC Embedding Retriever |   0.253912 | 0.226885 |
+|  0 | Our open source RAG solution      |   0.253912 | 0.226885 |
 
 Again, this can't be apple to apple comparison given it was tested only on 28/*2 questions by Open AI, thus they had way larger chunks compared to ours 466/*2 questions on every small chunk.
 
