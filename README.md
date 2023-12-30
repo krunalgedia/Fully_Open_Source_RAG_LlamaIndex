@@ -62,7 +62,7 @@ An IndexNode, derived from a TextNode, primarily encapsulates textual content. I
 
 Below is the Diagram of all the above steps:
 
-![Image 1](https://github.com/krunalgedia/Fully_Open_Source_RAG_LlamaIndex/blob/main/images_readme/ip.png)
+![Image 1](https://github.com/krunalgedia/Fully_Open_Source_RAG_LlamaIndex/blob/main/images_readme/ip2.png)
 
 **2nd Part: Embedding, Recursive Retrieval, and LLM Generative AI answer.**
 
