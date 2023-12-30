@@ -31,9 +31,7 @@ Key Features
 
 ## Files
 
-```bash
-Fully_Open_Source_RAG_LlamaIndex.ipynb contains the end-to-end code for RAG with LlamaIndex and Huggingface
-```
+* Fully_Open_Source_RAG_LlamaIndex.ipynb contains the end-to-end code for RAG with LlamaIndex and Huggingface
 
 Check Dependencies for further details.
 
