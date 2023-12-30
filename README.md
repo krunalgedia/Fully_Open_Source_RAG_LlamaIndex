@@ -5,6 +5,7 @@ Business Problem:
 Many users struggle to find accurate and contextually relevant information from vast amounts of unstructured data. Traditional search engines may not capture the nuance or context of a user's query, leading to less-than-optimal search results. Additionally, generating detailed and coherent responses to complex queries often requires a deep understanding of the context and the ability to retrieve relevant information. Privacy-conscious users may be concerned about sharing their queries or data with proprietary platforms.
 
 Project Objective:
+
 The primary objective of this open-source project is to develop a Privacy-Focused Retrieval-Augmented Generation (RAG) system using open-source embeddings and a Large Language Model (LLM). The system aims to enhance the accuracy and contextuality of responses to user queries while addressing privacy concerns associated with data sharing on proprietary platforms.
 
 ## Table of Contents
