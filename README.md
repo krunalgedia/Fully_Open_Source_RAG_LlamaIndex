@@ -68,8 +68,8 @@ Below is the Diagram of all the above steps:
 **2nd Part: Embedding, Recursive Retrieval, and LLM Generative AI answer.**
 
 We use 
-* Small BAAI general embedding [3]
-* LLM MistralAI [4]
+* Small BAAI general embedding from Huggingface [3]
+* LLM MistralAI from Huggingface [4]
 
 5. We then store all the indexes using VectorStoreIndex. A VectorStoreIndex in LlamaIndex is a type of index that uses vector representations of text for efficient retrieval of relevant context.It is built on top of a VectorStore, which is a data structure that stores vectors and allows for quick nearest neighbor search. The VectorStoreIndex takes in IndexNode objects, which represent chunks of the original documents.
 
