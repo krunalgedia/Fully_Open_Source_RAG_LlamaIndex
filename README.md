@@ -87,11 +87,14 @@ Following are the first two nodes retrieved by the query:
 First two nodes retrieved by our RAG | First two nodes retrieved by OpenAI GPT4
 
 As seen, the first node has the same content in both.
+
 The final answer given by Open AI and our solution is:
 
 ![Image 1](https://github.com/krunalgedia/Fully_Open_Source_RAG_LlamaIndex/blob/main/images_readme/ansmine.png) | ![Image 2](https://github.com/krunalgedia/Fully_Open_Source_RAG_LlamaIndex/blob/main/images_readme/ansopenai.png)
 --- | --- 
 Answer by our RAG | Answer by OpenAI GPT4
+
+Both the answers seem to be fine showing the power of open source solution we developed using smaller models and embeddings
 
 Further Response Evaluation (as given and used by Open AI):
 
