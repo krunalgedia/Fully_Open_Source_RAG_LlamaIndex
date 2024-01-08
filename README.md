@@ -101,7 +101,7 @@ Further Response Evaluation (as given and used by Open AI):
 
 * Relevancy Evaluator: Measures if the response + source nodes match the query.
 
-We get a Faithfulness score of 0.4 and a Relevancy score of 0.9. Open AI gets both as 1.0. However, it is important to note that we generated 466/*2 questions while OpenAI 28/*2. This is because we worked on a GPU with 16 GB RAM and thus had to keep the Node size small while OpenAI had a much larger node size, thus reducing the probability of nodes not containing the answer easily.
+**We get a Faithfulness score of 0.4 and a Relevancy score of 0.9. Open AI gets both as 1.0.** However, it is important to note that we generated 466/*2 questions while OpenAI 28/*2. This is because we worked on a GPU with 16 GB RAM and thus had to keep the Node size small while OpenAI had a much larger node size, thus reducing the probability of nodes not containing the answer easily.
 
 
 * Hit Rate:
